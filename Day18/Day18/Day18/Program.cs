@@ -21,11 +21,11 @@ namespace Day18
                     pairs.Add(Parse(line, null));
                 }
 
-                {
-                    pairs.Clear();
-                    pairs.Add(Parse("[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]", null));
-                    pairs.Add(Parse("7,[[[3,7],[4,3]],[[6,3],[8,8]]]", null));
-                }
+                //{
+                //    pairs.Clear();
+                //    pairs.Add(Parse("[[0,[4,5]],[0,0]],[[[4,5],[2,6]],[9,5]]", null));
+                //    pairs.Add(Parse("7,[[[3,7],[4,3]],[[6,3],[8,8]]]", null));
+                //}
 
                 var index = 1;
                 var pair = pairs[0];
@@ -34,8 +34,8 @@ namespace Day18
                 {
                     var newPair = new Pair(pair, pairs[index], null);
 
-                    Console.WriteLine("Adding: " + pair.ToString() + " and " + pairs[index].ToString());
-                    Console.WriteLine(newPair.ToString());
+                    //Console.WriteLine("Adding: " + pair.ToString() + " and " + pairs[index].ToString());
+                    //Console.WriteLine(newPair.ToString());
 
                     RecursiveValidateParent(newPair);
 
@@ -48,10 +48,10 @@ namespace Day18
                                 break;
                             }
                         }
-                        Console.WriteLine("Post operation: " + newPair);
+                        //Console.WriteLine("Post operation: " + newPair);
                     }
 
-                    Console.WriteLine("Result post addition: " + newPair.ToString());
+                    //Console.WriteLine("Result post addition: " + newPair.ToString());
 
                     pair = newPair;
 
@@ -96,12 +96,12 @@ namespace Day18
                 return true;
             }
 
-            if (DoRecursiveCheckSplit(root.Right))
+            if (CheckSplit(root))
             {
                 return true;
             }
 
-            if (CheckSplit(root))
+            if (DoRecursiveCheckSplit(root.Right))
             {
                 return true;
             }
@@ -121,12 +121,12 @@ namespace Day18
                 return true;
             }
 
-            if (DoRecursiveCheckExplode(root.Right))
+            if (CheckExplode(root))
             {
                 return true;
             }
 
-            if (CheckExplode(root))
+            if (DoRecursiveCheckExplode(root.Right))
             {
                 return true;
             }
@@ -249,6 +249,7 @@ namespace Day18
                 }
             }
 
+            if (!changed)
             {
                 if (root.Right is PairValue val && val.Value >= 10)
                 {
