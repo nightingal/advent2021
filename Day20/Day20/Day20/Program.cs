@@ -9,7 +9,7 @@ namespace Day20
     {
         static void Main(string[] args)
         {
-            var bufferLength = 10000;
+            var bufferLength = 400;
             var iterationCount = 50;
 
             using (StreamReader reader = new StreamReader(@"C:\dev\advantofcode\Day20\input.txt"))
@@ -63,11 +63,12 @@ namespace Day20
                     Console.WriteLine("Starting iteration: " + i);
                     image = ProcessImage(image, algorithm);
 
-                    //image.Display();
+                    image.Display();
                 }
 
-                var count = image.CountChar('#', bufferLength/2);
-
+                image.WriteToFile("Result.txt");
+               
+                var count = image.CountChar('#', bufferLength);
                 Console.WriteLine("Count: " + count);
             }
         }
@@ -146,9 +147,9 @@ namespace Day20
                 var count = 0;
                 var halfBuffer = bufferSize / 2;
 
-                for (var row = bufferSize / 2; row < this.RowCount - halfBuffer; ++row)
+                for (var row = halfBuffer; row < this.RowCount - halfBuffer; ++row)
                 {
-                    for (var col = bufferSize / 2; col < this.ColCount - halfBuffer; ++col)
+                    for (var col = halfBuffer; col < this.ColCount - halfBuffer; ++col)
                     {
                         var strC = this._rows[row][col];
                         if (strC == c)
@@ -169,6 +170,17 @@ namespace Day20
                     Console.WriteLine(row);
                 }
                 Console.WriteLine("--------------------");
+            }
+
+            public void WriteToFile(string path)
+            {
+                using (StreamWriter writer = new StreamWriter(path))
+                {
+                    foreach (var row in this._rows)
+                    {
+                        writer.WriteLine(row);
+                    }
+                }
             }
         }
     }
